@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { newHead } from "../../actions";
+import { inc_Score, newHead, setHead } from "../../actions";
 
 import "./snakeBoard.css";
 
@@ -8,15 +8,15 @@ const SnakeBoard = () => {
   // redux
   const snake = useSelector((state) => state.snake);
   const head = useSelector((state) => state.head);
-  console.log("head", head);
+  const score = useSelector((state) => state.score);
   const dispatch = useDispatch();
 
   // board config
   const Board_size = 10;
-  const foodCord = [[], []];
-  const [board, setBoard] = useState(
-    new Array(Board_size).fill(0).map((row) => new Array(Board_size).fill(0))
-  );
+  const foodCord = [];
+  const board = new Array(Board_size)
+    .fill(0)
+    .map((_) => new Array(Board_size).fill(0));
 
   snake.forEach((cord) => {
     board[cord[0]][cord[1]] = 1;
@@ -44,20 +44,30 @@ const SnakeBoard = () => {
 
     switch (e.key) {
       case "ArrowRight":
+        dispatch(setHead([head[0], head[1] + 1]));
         dispatch(newHead([head[0], head[1] + 1]));
-        // console.log(snake);
+        console.log(snake);
         break;
       case "ArrowLeft":
-        dispatch(newHead([head[0], head[1] - 2]));
+        dispatch(setHead([head[0], head[1] - 1]));
+        dispatch(newHead([head[0], head[1] - 1]));
         break;
       case "ArrowUp":
+        dispatch(setHead([head[0] - 1, head[1]]));
         dispatch(newHead([head[0] - 1, head[1]]));
         break;
       case "ArrowDown":
+        dispatch(setHead([head[0] + 1, head[1]]));
         dispatch(newHead([head[0] + 1, head[1]]));
         break;
       default:
         break;
+    }
+
+    console.log(score);
+    if (JSON.stringify(foodCord) === JSON.stringify(head)) {
+      dispatch(inc_Score());
+      generateFood();
     }
   };
 
