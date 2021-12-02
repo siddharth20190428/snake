@@ -1,11 +1,9 @@
 import "./App.css";
-import SnakeBoard from "./components/board/SnakeBoard";
-import Score from "./components/Score";
+import SnakeBoard from "./components/snakeboard/SnakeBoard";
 
 function App() {
   return (
     <div className="App">
-      <Score />
       <SnakeBoard />
     </div>
   );

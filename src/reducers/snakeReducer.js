@@ -1,20 +1,22 @@
-const initialState = [
-  [5, 5],
-  [5, 6],
-];
+const initialState = {
+  dx: 1,
+  dy: 0,
+  cords: [
+    [4, 5],
+    [4, 6],
+  ],
+};
 
-const snakeReducer = (state = initialState, action) => {
+const headReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "NEW_HEAD":
-      let newState = JSON.parse(JSON.stringify(state));
-      newState.push(action.payload);
-      newState.shift();
-      console.log(newState);
-      // console.log("pushed", newState);
-      return [...newState];
+    case "ADD__CORD":
+      let newCords = [...state.cords];
+      newCords.push(action.payload);
+      console.log(newCords);
+      return { ...state, cords: newCords };
     default:
       return state;
   }
 };
 
-export default snakeReducer;
+export default headReducer;

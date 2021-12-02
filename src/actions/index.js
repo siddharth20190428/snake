@@ -1,21 +1,8 @@
-const newHead = (head) => {
-  return {
-    type: "NEW_HEAD",
-    payload: head,
-  };
-};
-
 const setHead = (head) => {
-  return {
-    type: "SET_HEAD",
-    payload: head,
-  };
+  return { type: "SET__HEAD", payload: head };
+};
+const addCord = (cord) => {
+  return { type: "ADD__CORD", payload: cord };
 };
 
-const inc_Score = () => {
-  return {
-    type: "INC_SCORE",
-  };
-};
-
-export { newHead, inc_Score, setHead };
+export { setHead, addCord };

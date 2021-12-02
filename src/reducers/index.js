@@ -1,12 +1,7 @@
-import snakeReducer from "./snakeReducer";
-import headReducer from "./headReducer";
 import { combineReducers } from "redux";
-import scoreReducer from "./scoreReducer";
+import headReducer from "./headReducer";
+import snakeReducer from "./snakeReducer";
 
-const rootReducer = combineReducers({
-  snake: snakeReducer,
-  head: headReducer,
-  score: scoreReducer,
-});
+const rootReducer = combineReducers({ head: headReducer, snake: snakeReducer });
 
 export default rootReducer;

@@ -1,11 +1,7 @@
-const initialState = [5, 6];
-
-const headReducer = (state = initialState, action) => {
+const headReducer = (state = [5, 6], action) => {
   switch (action.type) {
-    case "SET_HEAD":
-      console.log("new head", action.payload);
+    case "SET__HEAD":
       return [...action.payload];
-
     default:
       return state;
   }
