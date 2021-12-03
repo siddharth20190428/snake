@@ -1,22 +1,33 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setHead, setSnake } from "../../actions";
+import { addCord, setHead, setInit } from "../../actions";
 import "./controls.css";
 
 const Controls = () => {
+  let snake = useSelector((state) => state.snake);
   let head = useSelector((state) => state.head);
   const dispatch = useDispatch();
 
-  const handleCont = (x, y) => {
-    dispatch(setSnake([y, x]));
+  const tail = snake[0];
+  console.log(head);
+  const handleCont = (cord) => {
+    const [y, x] = cord;
+
+    if (y < 0 || y > 9 || x < 0 || x > 9) {
+      // handle game over
+      // console.log("0");
+      return;
+    }
+    dispatch(addCord(cord));
     dispatch(setHead({ y, x }));
+    dispatch(setInit(tail));
   };
 
   const dirs = {
-    up: [head.x, head.y - 1],
-    down: [head.x, head.y + 1],
-    left: [head.x - 1, head.y],
-    right: [head.x + 1, head.y],
+    up: [head.y - 1, head.x],
+    down: [head.y + 1, head.x],
+    left: [head.y, head.x - 1],
+    right: [head.y, head.x + 1],
   };
   return (
     <div
@@ -27,7 +38,7 @@ const Controls = () => {
       }}
     >
       <div>
-        <div className="cont up" onClick={() => handleCont(...dirs.up)}>
+        <div className="cont up" onClick={() => handleCont(dirs.up)}>
           &#8593;
         </div>
       </div>
@@ -36,13 +47,13 @@ const Controls = () => {
           display: "flex",
         }}
       >
-        <div className="cont left" onClick={() => handleCont(...dirs.left)}>
+        <div className="cont left" onClick={() => handleCont(dirs.left)}>
           &#8592;
         </div>
-        <div className="cont down" onClick={() => handleCont(...dirs.down)}>
+        <div className="cont down" onClick={() => handleCont(dirs.down)}>
           &#8595;
         </div>
-        <div className="cont right" onClick={() => handleCont(...dirs.right)}>
+        <div className="cont right" onClick={() => handleCont(dirs.right)}>
           &#8594;
         </div>
       </div>

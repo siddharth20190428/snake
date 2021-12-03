@@ -1,6 +1,6 @@
 const initialState = {
-  x: 5,
   y: 4,
+  x: 6,
 };
 
 const headReducer = (state = initialState, action) => {
