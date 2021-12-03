@@ -1,76 +1,53 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCord, setHead } from "../../actions";
+import { setHead, setSnake } from "../../actions";
+// import { dirs, handleCont } from "../controls/Controls";
 
 import "./snakeBoard.css";
 
 const SnakeBoard = () => {
-  let [board, setBoard] = useState([]);
-  const snake = useSelector((state) => state.snake);
+  let board = useSelector((state) => state.board);
+  let head = useSelector((state) => state.head);
   const dispatch = useDispatch();
 
-  // board config
-  const Board_size = 10;
-  // const foodCord = [];
-
-  useEffect(() => {
-    setBoard(
-      new Array(Board_size).fill(0).map((_) => new Array(Board_size).fill(0))
-    );
-  }, [setBoard, snake]);
-
-  // let board = new Array(Board_size)
-  //   .fill(0)
-  //   .map((_) => new Array(Board_size).fill(0));
-
-  snake.cords.forEach((cord) => {
-    console.log(cord);
-    if (board) {
-      board[cord[0]][cord[1]] = 1;
-    } else {
-      console.log("waiting");
-    }
-  });
+  const handleCont = (x, y) => {
+    dispatch(setSnake([y, x]));
+    dispatch(setHead({ y, x }));
+  };
 
   const handleKeyDown = (e) => {
-    // console.log(snake.cords);
-    let head = snake.cords[snake.cords.length - 1];
-    let cord = [head[0] + snake.dy, head[1] + snake.dx];
-    console.log("vinit", head, cord);
+    const dirs = {
+      up: [head.x, head.y - 1],
+      down: [head.x, head.y + 1],
+      left: [head.x - 1, head.y],
+      right: [head.x + 1, head.y],
+    };
+    console.table(dirs);
     switch (e.key) {
       case "ArrowRight":
-        dispatch(addCord(cord));
-
-        // dispatch(setHead([nHead[0], nHead[1] + 1]));
-        // dispatch(newHead([head[0], head[1] + 1]));
-        // console.log(snake);
+        handleCont(...dirs.right);
         break;
       case "ArrowLeft":
-        // dispatch(setHead([head[0], head[1] - 1]));
-        // dispatch(newHead([head[0], head[1] - 1]));
+        handleCont(...dirs.left);
         break;
       case "ArrowUp":
-        // dispatch(setHead([head[0] - 1, head[1]]));
-        // dispatch(newHead([head[0] - 1, head[1]]));
+        handleCont(...dirs.up);
         break;
       case "ArrowDown":
-        // dispatch(setHead([head[0] + 1, head[1]]));
-        // dispatch(newHead([head[0] + 1, head[1]]));
+        handleCont(...dirs.down);
         break;
       default:
         break;
     }
+    console.log(head);
   };
-  function sleep(ms) {
-    var unixtime_ms = new Date().getTime();
-    while (new Date().getTime() < unixtime_ms + ms) {}
-  }
 
   useEffect(() => {
-    window.addEventListener("keydown", (e) => {
-      handleKeyDown(e);
-    });
-  }, []);
+    window.addEventListener("keydown", (e) => handleKeyDown(e));
+    return () => {
+      window.removeEventListener("keydown", (e) => handleKeyDown(e));
+    };
+  });
 
   return (
     <div className="board">
@@ -82,6 +59,9 @@ const SnakeBoard = () => {
               className={`cell ${
                 cell === 1 ? "snake" : cell === 2 ? "food" : ""
               }`}
+              // onClick={() => {
+              //   dispatch(setSnake([row_index, cell_index]));
+              // }}
             ></div>
           ))}
         </div>

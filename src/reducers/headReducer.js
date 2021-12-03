@@ -1,7 +1,12 @@
-const headReducer = (state = [5, 6], action) => {
+const initialState = {
+  x: 5,
+  y: 4,
+};
+
+const headReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET__HEAD":
-      return [...action.payload];
+      return { ...action.payload };
     default:
       return state;
   }

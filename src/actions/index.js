@@ -1,8 +1,8 @@
 const setHead = (head) => {
   return { type: "SET__HEAD", payload: head };
 };
-const addCord = (cord) => {
-  return { type: "ADD__CORD", payload: cord };
+const setSnake = (cord) => {
+  return { type: "SET__SNAKE", payload: cord };
 };
 
-export { setHead, addCord };
+export { setHead, setSnake };
