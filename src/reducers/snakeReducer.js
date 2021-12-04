@@ -4,10 +4,12 @@ const initialState = [
 ];
 
 const snakeReducer = (state = initialState, action) => {
+  let newState = JSON.parse(JSON.stringify(state));
   switch (action.type) {
     case "ADD__CORD":
-      let newState = JSON.parse(JSON.stringify(state));
       newState.push(action.payload);
+      return newState;
+    case "REMOVE__CORD":
       newState.shift();
       return newState;
     default:

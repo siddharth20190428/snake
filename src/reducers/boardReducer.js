@@ -9,8 +9,8 @@ const boardReducer = (state = initialState, action) => {
     case "SET__SNAKE":
       newState[action.payload[0]][action.payload[1]] = 1;
       return newState;
-    case "SET__FOOD":
-      newState[action.payload[0]][action.payload[1]] = 2;
+    case "SET__BOARD__FOOD":
+      newState[action.payload.y][action.payload.x] = 2;
       return newState;
     default:
       return state;

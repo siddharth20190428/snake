@@ -1,15 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCord, setHead, setInit } from "../../actions";
+import {
+  addCord,
+  removeCord,
+  setBoardFood,
+  setFood,
+  setHead,
+  setInit,
+} from "../../actions";
+import { getRandom } from "../../reducers/foodReducer";
 import "./controls.css";
 
 const Controls = () => {
   let snake = useSelector((state) => state.snake);
   let head = useSelector((state) => state.head);
+  let food = useSelector((state) => state.food);
   const dispatch = useDispatch();
 
   const tail = snake[0];
-  console.log(head);
+
   const handleCont = (cord) => {
     const [y, x] = cord;
 
@@ -20,8 +29,19 @@ const Controls = () => {
     }
     dispatch(addCord(cord));
     dispatch(setHead({ y, x }));
+
+    if (JSON.stringify(head) === JSON.stringify(food)) {
+      let newFood = { y: getRandom(), x: getRandom() };
+      dispatch(setFood(newFood));
+      return;
+    }
+    dispatch(removeCord(cord));
     dispatch(setInit(tail));
   };
+
+  useEffect(() => {
+    dispatch(setBoardFood(food));
+  }, [food]);
 
   const dirs = {
     up: [head.y - 1, head.x],
@@ -29,6 +49,7 @@ const Controls = () => {
     left: [head.y, head.x - 1],
     right: [head.y, head.x + 1],
   };
+
   return (
     <div
       style={{
@@ -38,7 +59,7 @@ const Controls = () => {
       }}
     >
       <div>
-        <div className="cont up" onClick={() => handleCont(dirs.up)}>
+        <div className="cont" onClick={() => handleCont(dirs.up)}>
           &#8593;
         </div>
       </div>
@@ -47,13 +68,13 @@ const Controls = () => {
           display: "flex",
         }}
       >
-        <div className="cont left" onClick={() => handleCont(dirs.left)}>
+        <div className="cont" onClick={() => handleCont(dirs.left)}>
           &#8592;
         </div>
-        <div className="cont down" onClick={() => handleCont(dirs.down)}>
+        <div className="cont" onClick={() => handleCont(dirs.down)}>
           &#8595;
         </div>
-        <div className="cont right" onClick={() => handleCont(dirs.right)}>
+        <div className="cont" onClick={() => handleCont(dirs.right)}>
           &#8594;
         </div>
       </div>

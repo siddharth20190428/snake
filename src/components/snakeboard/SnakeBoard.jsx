@@ -25,7 +25,10 @@ const SnakeBoard = () => {
               className={`cell ${
                 cell === 1 ? "snake" : cell === 2 ? "food" : ""
               }`}
-            ></div>
+            >
+              {row_index}
+              {cell_index}
+            </div>
           ))}
         </div>
       ))}
