@@ -1,7 +1,6 @@
-const initialState = [
-  [4, 5],
-  [4, 6],
-];
+import { initialSnake } from "../utils";
+
+const initialState = [...initialSnake];
 
 const snakeReducer = (state = initialState, action) => {
   let newState = JSON.parse(JSON.stringify(state));
@@ -12,6 +11,8 @@ const snakeReducer = (state = initialState, action) => {
     case "REMOVE__CORD":
       newState.shift();
       return newState;
+    case "RESET__SNAKE":
+      return [...initialSnake];
     default:
       return state;
   }

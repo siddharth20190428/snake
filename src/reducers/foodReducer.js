@@ -1,6 +1,4 @@
-export const getRandom = () => {
-  return Math.floor(Math.random() * 9);
-};
+import { getRandom } from "../utils";
 
 const initialState = {
   y: getRandom(),

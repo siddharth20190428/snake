@@ -12,6 +12,8 @@ const boardReducer = (state = initialState, action) => {
     case "SET__BOARD__FOOD":
       newState[action.payload.y][action.payload.x] = 2;
       return newState;
+    case "RESET__BOARD":
+      return [...initialState];
     default:
       return state;
   }

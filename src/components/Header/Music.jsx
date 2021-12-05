@@ -11,6 +11,7 @@ const Music = () => {
   useEffect(() => {
     setPlay(1);
     audio.volume = 0.1;
+    audio.loop = true;
   }, []);
 
   return (

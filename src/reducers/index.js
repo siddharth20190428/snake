@@ -4,6 +4,7 @@ import boardReducer from "./boardReducer";
 import snakeReducer from "./snakeReducer";
 import foodReducer from "./foodReducer";
 import scoreReducer from "./scoreReducer";
+import moveReducer from "./moveReducer";
 
 const rootReducer = combineReducers({
   head: headReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   snake: snakeReducer,
   food: foodReducer,
   score: scoreReducer,
+  move: moveReducer,
 });
 
 export default rootReducer;
