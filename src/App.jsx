@@ -1,12 +1,12 @@
 import "./App.css";
-import Controls from "./components/controls/Controls";
-import SnakeBoard from "./components/snakeboard/SnakeBoard";
+import SnakeBoard from "./components/board/SnakeBoard";
+import Header from "./components/Header/Header";
 
 function App() {
   return (
     <div className="App">
-      <Controls />
       <SnakeBoard />
+      <Header />
     </div>
   );
 }
